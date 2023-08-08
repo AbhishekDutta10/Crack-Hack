@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <title>Registration</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            margin: 0px;
+            padding: 0px;
+        }
+        body {
+          background-image: url('{{ url_for("static", filename="ranger-4df6c1b6.png") }}');
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: 100% 100%;
+        }
+        /* form styling */
+        form {
+            width: 50%;
+            margin: 90px auto;
+            padding: 30px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: white;
+        }
+        a {
+            text-decoration: none;
+            color: #ff69b4;
+            margin-top: 10px;
+            display: block;
+            text-align: right;
+        }
+        a:hover {
+            text-decoration: underline;
+            color: #ff1493;
+        }
+
+        #heading {
+            text-align: center;
+            font-size: 32px;
+            color: #ff69b4;
+            margin-bottom: 20px;
+        }
+
+  
+        /* label styling */
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+  
+        /* input styling */
+        input[type="text"], input[type="password"], input[type="email"] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        /* submit button styling */
+        input[type="submit"] {
+            width: 100%;
+            background-color: #ff69b4;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        /* gender field styling */
+        select#gender {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 18px;
+        }
+  
+        /* submit button hover effect */
+        input[type="submit"]:hover {
+            background-color: #ff1493;
+        }
+        /* Eye icon */
+        .fa-eye {
+            position: relative;
+            margin-left: 93%;
+            right: 4px;
+            top: -37px;
+            cursor: pointer;
+            font-size: 18px;
+            color: #ccc;
+        }
+        .error {
+            color: red;
+        }
+      
+
+
+    </style>
+</head>
+<body>
+    <form action="" method="post">
+    <h1 id="heading">Sign Up</h1>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name"><br>
+        <div id="name-error" class="error"></div>
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+        </select><br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email"><br>
+        <div id="email-error" class="error"></div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">
+        <i class="fa fa-eye eye-icon" onclick="showPassword()" id='toggle'></i><br>
+        <div id="pass-error" class="error"></div>
+        <!-- <a href="login.html">Already have account? Login</a> -->
+        <input type="submit" name="submit" value="Register">
+    </form>
+    <script>
+        function showPassword() {
+            var passwordInput = document.getElementById("password");
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                
+            } else {
+                passwordInput.type = "password";
+            }
+            document.getElementById("toggle").classList.toggle('fa-eye-slash');
+        }
+
+        const passwordInput = document.getElementById("password");
+        const nameInput = document.getElementById("name");
+        const emailInput = document.getElementById("email");
+        const errorSpan = document.getElementById("pass-error");
+        const errorEmail = document.getElementById("email-error");
+        const errorName = document.getElementById("name-error");
+        passwordInput.addEventListener("input", function() {
+            let password = passwordInput.value;
+            let errorMessage = "";
+            
+            if (password.length < 8) {
+                errorMessage = "Password must be at least 8 characters long";
+            }
+            else if (!password.match(/[A-Z]/)) {
+                errorMessage = "Password must contain at least one uppercase letter";
+            }
+            else if (!password.match(/[a-z]/)) {
+                errorMessage = "Password must contain at least one lowercase letter";
+            }
+            else if (!password.match(/\d/)) {
+                errorMessage = "Password must contain at least one number";
+            }
+            
+            errorSpan.innerHTML = errorMessage;
+            
+            if (errorMessage === "") {
+                passwordInput.style.borderColor = "";
+                // eyeIcon.style.right = "";
+            }
+            else {
+                passwordInput.style.borderColor = "red";
+                // eyeIcon.style.right = "24px";
+            }
+         });
+        nameInput.addEventListener("input", function() {
+            let name = nameInput.value;
+            let errorMessage = "";
+            
+            if (!name) {
+                errorMessage = "Name is required";
+            }
+            
+            errorName.innerHTML = errorMessage;
+            
+            if (errorMessage === "") {
+                nameInput.style.borderColor = "";
+            }
+            else {
+                nameInput.style.borderColor = "red";
+            }
+         });
+        emailInput.addEventListener("input", function() {
+            let email = emailInput.value;
+            let errorMessage = "";
+            
+            if (!email) {
+                errorMessage = "Email is required";
+            } else if (!/\S+@\S+\.\S+/.test(email)) {
+                errorMessage = "Email is not valid";
+            }
+                        
+            errorEmail.innerHTML = errorMessage;
+            
+            if (errorMessage === "") {
+                emailInput.style.borderColor = "";
+            }
+            else {
+                emailInput.style.borderColor = "red";
+            }
+         });
+
+
+
+
+
+    </script>
+    
+</body>
+</html>

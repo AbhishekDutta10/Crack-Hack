@@ -1,0 +1,67 @@
+{% extends 'template.html' %}
+{% block title %}
+{{info['name']}}| Crack Hack
+{% endblock title %}
+{% block body %}
+<div class="mid">
+    <ul class="navbar">
+        <li><a href="/">Home</a></li>
+        <li><a href="/profile" class="active">Profile</a></li>
+        <li><a href="/logout">Log Out</a></li>
+    </ul>
+    <div class="profile-container">
+        <div class="profile-image">
+          <img src="https://source.unsplash.com/150x150/?cartoon" alt="Profile Image">
+        </div>
+        <div class="profile-header">
+          <h2 class="profile-name">{{info['name']}}</h2>
+          <p class="profile-email">{{info['email']}}</p>
+          <p class="profile-gender">{{info['gender']}}</p>
+        </div>
+      </div>
+      
+{% endblock body %}
+{% block style %}
+<style>
+
+  
+  .profile-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 60px auto; 
+  
+  }
+  
+  .profile-header {
+    text-align: center;
+  }
+  
+  .profile-name {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .profile-email {
+    font-size: 16px;
+    color: #666;
+  }
+  
+  .profile-gender {
+    font-size: 16px;
+    color: #666;
+  }
+  
+  .profile-image {
+    margin-top: 20px;
+  }
+  
+  .profile-image img {
+    border-radius: 50%;
+  }
+</style>
+{% endblock style %}

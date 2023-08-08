@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        *{
+            box-sizing: border-box;
+            margin: 0px;
+            padding: 0px;
+        }
+        body {
+          background-image: url('{{ url_for("static", filename="ranger-4df6c1b6.png") }}');
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: 100% 100%;
+        }
+        /* form styling */
+        form {
+            width: 50%;
+            margin: 100px auto;
+            padding: 30px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: white;
+        }
+
+        a {
+            text-decoration: none;
+            color: #ff69b4;
+            margin-top: 10px;
+            display: block;
+            text-align: right;
+        }
+        a:hover {
+            text-decoration: underline;
+            color: #ff1493;
+        }
+
+
+        #heading {
+            text-align: center;
+            font-size: 32px;
+            color: #ff69b4;
+            margin-bottom: 20px;
+        }
+  
+        /* label styling */
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+  
+        /* input styling */
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+  
+        /* submit button styling */
+        input[type="submit"] {
+            width: 100%;
+            background-color: #ff69b4;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        input[type="submit"]:hover {
+            background-color: #ff1493;
+        }
+
+        /* Eye icon */
+        .fa-eye {
+            position: relative;
+            margin-left: 93%;
+            right: 4px;
+            top: -37px;
+            cursor: pointer;
+            font-size: 18px;
+            color: #ccc;
+        }
+        
+    </style>
+</head>
+<body>
+    <form action="" method="post">
+        <h1 id="heading">Sign In</h1>
+        <label for="master-key">Master Key:</label>
+        <input type="password" id="master-key" name="master-key">
+        <i class="fa fa-eye" onclick="showPassword()" id='toggle'></i><br>
+        <input type="submit" name="submit" value="Login">
+    </form>
+
+    <script>
+        function showPassword() {
+            var passwordInput = document.getElementById("password");
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                
+            } else {
+                passwordInput.type = "password";
+            }
+            document.getElementById("toggle").classList.toggle('fa-eye-slash');
+        }
+    </script>
+</body>
+</html>

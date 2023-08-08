@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Camera Capture</title>
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Bhai&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+      *{
+            box-sizing: border-box;
+            margin: 0px;
+            padding: 0px;
+        }
+        body {
+          font-family: 'Baloo Bhai', cursive;
+          color: #000;
+          margin: 0px;
+          padding: 0px;
+          background: url('{{ url_for("static", filename="ranger-4df6c1b6.png") }}');
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: 100% 100%;
+          overflow-y: hidden;
+          overflow-x: hidden;
+      }
+        
+        .container {
+          display: flex;
+        }
+
+        .left-container, .right-container {
+          flex: 1;
+          padding: 20px;
+          border: 1px solid #ccc;
+          margin: 30px auto;
+          border-radius: 10px;
+          background: #fff;
+        }
+
+        .left-container {
+          margin-right: 20px;
+        }
+        .btn {
+            width: 100%;
+            background-color: #ff69b4;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        .btn:hover {
+        background-color: #ff1493;
+        }
+    </style>
+  </head>
+  <body>
+      
+    <div class="container">
+      <div class="left-container">
+        <!-- Content for left container goes here -->
+        <h1>Camera Capture</h1>
+        <video id="video" width="640" height="480"></video>
+        <button class='btn' id="capture">Capture</button>
+      </div>
+      <div class="right-container">
+        <!-- Content for right container goes here -->
+        <h1>Image Preview</h1>
+        <canvas id="canvas" width="640" height="480"></canvas>
+      </div>
+    </div>
+  
+    <script>
+      const video = document.getElementById('video');
+      const canvas = document.getElementById('canvas');
+      const captureButton = document.getElementById('capture');
+      const constraints = {
+        video: true
+      };
+      
+      // Access user's camera
+      navigator.mediaDevices
+      .getUserMedia({ video: true, audio: false })
+      .then((stream) => {
+        video.srcObject = stream;
+        video.play();
+      })
+      .catch((err) => {
+        console.error(`An error occurred: ${err}`);
+      });
+        
+      // Capture image from camera and send to server
+      captureButton.addEventListener('click', () => {
+        const context = canvas.getContext('2d');
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        var image = canvas.toDataURL('image/png');
+
+        // Send captured image data to server using AJAX
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/capture');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({ image }));
+        xhr.onload = () => {
+          response=JSON.parse(xhr.responseText)
+          alert(response['status']+' : '+response['message']); // Handle server response
+          if (response['status']=='success'){
+            location.href='/signup';
+          }
+          if (response['status']=='member'){
+            location.href='/login';
+          }
+        };
+      });
+    </script>
+  </body>
+</html>

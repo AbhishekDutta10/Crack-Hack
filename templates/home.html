@@ -1,0 +1,52 @@
+{% extends 'template.html' %}
+{% block title %}Crack Hack | Home{% endblock title %}
+{% block body %}
+    
+<div class="mid">
+    <ul class="navbar">
+        <li><a href="/" class="active">Home</a></li>
+        <li><a href="/profile">Profile</a></li>
+        <li><a href="/logout">Log Out</a></li>
+    </ul>
+</div>
+
+<!-- Right box for buttons -->
+<!-- <div class="right">
+    <button class="btn">Call Us Now</button>
+    <button class="btn">Email Us</button>
+</div> -->
+</header>
+<div class="container">
+<h1>Welcome {{name}}</h1>
+<form action="/post" method="post">
+    <div class="form-group">
+        <textarea name="text" placeholder="Share Your Thoughts..."></textarea>
+        <input type="text" name="location" placeholder="Location">
+    </div>
+    
+    <button class="btn">POST</button>
+</form>
+</div>
+<div class="container right">
+<h1>Feed</h1>
+<div class="content">
+    {% for i in posts.keys()|reverse %}
+        
+    <div class="post-view-box">
+        <div class="post-view-header">
+          <h2 class="post-view-name">{{posts[i]['name']}}</h2>
+          <p class="post-view-email">{{posts[i]['email']}}</p>
+        </div>
+        <div class="post-view-content">
+          <p>{{posts[i]['text']}}</p>
+        </div>
+        <div class="post-view-footer">
+            <p class="post-view-location">{{posts[i]['location']}}</p>
+            <p class="post-view-date">{{i}}</p>
+          <!-- <button class="like-button">Like</button> -->
+        </div>
+    </div>
+    {% endfor %}
+</div>
+</div>
+{% endblock body %}
